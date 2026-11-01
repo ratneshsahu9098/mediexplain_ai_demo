@@ -81,3 +81,9 @@ def health() -> dict:
         "ai_provider": provider.label() if provider else "template",
         "ocr_available": ocr_engine.is_available(),
     }
+
+
+@app.get("/health", include_in_schema=False)
+def health_alias() -> dict:
+    """Alias used by local process supervisors and deployment probes."""
+    return health()
