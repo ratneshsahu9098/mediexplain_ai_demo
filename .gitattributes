@@ -1,0 +1,9 @@
+# Normalise text files to LF so Windows and Linux checkouts match.
+* text=auto eol=lf
+
+# Binary assets must never be converted.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
