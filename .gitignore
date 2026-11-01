@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Runtime data (medical documents must never be committed)
+data/uploads/*
+data/processed/*
+data/vector_db/*
+!data/uploads/.gitkeep
+!data/processed/.gitkeep
+!data/vector_db/.gitkeep
+
+# Frontend
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# Logs / temp
+*.log
+tmp/
+.Temp/
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
