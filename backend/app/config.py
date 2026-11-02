@@ -37,10 +37,14 @@ class Settings(BaseSettings):
     tesseract_cmd: str = ""
     ocr_dpi: int = 300
 
-    ai_provider: str = "ollama"  # ollama | cloud | none
+    ai_provider: str = "ollama"  # ollama | openrouter | cloud | none
     ai_timeout_seconds: int = 120
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "qwen2.5:3b"
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    openrouter_api_key: str = ""
+    openrouter_model: str = "openrouter/auto"
+    openrouter_site_url: str = ""
     cloud_llm_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
     cloud_llm_api_key: str = ""
     cloud_llm_model: str = "gemini-2.0-flash"

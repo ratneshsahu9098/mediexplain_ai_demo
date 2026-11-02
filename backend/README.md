@@ -39,11 +39,15 @@ All settings come from environment variables / `.env` (see `../.env.example`).
 | `MAX_UPLOAD_MB` | `15` | Max upload size |
 | `MAX_PDF_PAGES` | `25` | Max pages processed |
 | `TESSERACT_CMD` | auto | Path to `tesseract.exe` |
-| `AI_PROVIDER` | `ollama` | `ollama` or `cloud` |
+| `AI_PROVIDER` | `ollama` | `ollama`, `openrouter`, `cloud` or `none` |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama endpoint |
 | `OLLAMA_MODEL` | `qwen2.5:3b` | Local model |
-| `CLOUD_LLM_API_KEY` | empty | Hosted provider key (optional) |
-| `CLOUD_LLM_MODEL` | empty | Hosted model name |
+| `OPENROUTER_API_KEY` | empty | OpenRouter key; required when `AI_PROVIDER=openrouter` |
+| `OPENROUTER_MODEL` | `openrouter/auto` | Any OpenRouter model slug |
+| `OPENROUTER_BASE_URL` | `https://openrouter.ai/api/v1` | OpenRouter-compatible base URL |
+| `OPENROUTER_SITE_URL` | empty | Optional attribution header |
+| `CLOUD_LLM_API_KEY` | empty | Other hosted provider key (optional) |
+| `CLOUD_LLM_MODEL` | empty | Other hosted model name |
 
 ## Processing pipeline
 
@@ -59,6 +63,7 @@ services/document_processor.py   orchestration + persisted artifacts
 └── ai/
     ├── llm_provider.py          provider interface + factory
     ├── ollama_provider.py       local Ollama client
+    ├── openrouter_provider.py   OpenRouter client
     ├── cloud_provider.py        OpenAI-compatible cloud client
     └── prompts.py               safety-constrained prompt templates
 ```
@@ -124,6 +129,26 @@ curl.exe -s -X POST "http://localhost:8000/api/reports/$($upload.id)/explain?lan
 
 A `.env` with `AI_PROVIDER=ollama` but no running Ollama returns template
 explanations (`provider: "template"`) instead of failing.
+
+### Using OpenRouter
+
+1. Create a key at <https://openrouter.ai/keys>.
+2. Set these values in `backend/.env`:
+
+   ```dotenv
+   AI_PROVIDER=openrouter
+   OPENROUTER_API_KEY=sk-or-v1-...
+   OPENROUTER_MODEL=openrouter/auto
+   ```
+
+3. Restart the API. `GET /api/health` should report `"ai_provider": "openrouter:openrouter/auto"`.
+
+Any OpenRouter model slug works, for example
+`openrouter/auto`, `meta-llama/llama-3.1-8b-instruct`, or a `:free` variant such
+as `nvidia/nemotron-3-ultra-550b-a55b:free`.
+Free variants are rate-limited by OpenRouter. The key stays server-side and is
+never exposed to the frontend; if a request fails, explanations fall back to
+templates and the response is marked `source: "template"`.
 
 ### Demo data
 

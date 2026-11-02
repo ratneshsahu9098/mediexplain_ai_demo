@@ -8,7 +8,7 @@
 | API | FastAPI | Auth, validation, authorization, orchestration |
 | Processing | PyMuPDF, pdfplumber, Tesseract | Text, tables, OCR |
 | Analysis | Python (deterministic) | Value/range comparison, flags |
-| AI | Ollama + Qwen / hosted LLM | Explanations, chat |
+| AI | Ollama + Qwen / OpenRouter / hosted LLM | Explanations, chat |
 | Storage | SQLite/PostgreSQL + ChromaDB | Metadata, reports, knowledge |
 
 ## 2. Upload → analysis flow
@@ -50,8 +50,9 @@ ExplanationService / ChatService
             │
             ▼
        LLMProvider (ABC)
-       ├── OllamaProvider  → POST /api/generate
-       └── CloudProvider   → OpenAI-compatible /chat/completions
+       ├── OllamaProvider       → POST /api/generate
+       ├── OpenRouterProvider   → OpenRouter /chat/completions
+       └── CloudProvider        → OpenAI-compatible /chat/completions
 ```
 
 Selection is configuration-only (`AI_PROVIDER`). If the configured provider fails, the service returns deterministic template explanations and marks the response `source: "template"` — the app never fabricates a value.

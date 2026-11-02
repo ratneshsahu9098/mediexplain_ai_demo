@@ -36,6 +36,19 @@ def get_provider() -> LLMProvider | None:
             model=settings.ollama_model,
             timeout=settings.ai_timeout_seconds,
         )
+    if provider in {"openrouter", "open-router", "open_router"}:
+        if not settings.openrouter_api_key.strip():
+            return None
+        from services.ai.openrouter_provider import OpenRouterProvider
+
+        return OpenRouterProvider(
+            api_key=settings.openrouter_api_key.strip(),
+            model=settings.openrouter_model,
+            base_url=settings.openrouter_base_url,
+            site_url=settings.openrouter_site_url.strip(),
+            app_name=settings.app_name,
+            timeout=settings.ai_timeout_seconds,
+        )
     if provider == "cloud":
         if not settings.cloud_llm_api_key:
             return None

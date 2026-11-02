@@ -43,7 +43,7 @@ Normalize text → extract test / value / unit / reference range
 Deterministic analysis engine (LOW / HIGH / NORMAL / UNKNOWN)
         │
         ▼
-AI explanation engine (local Ollama + Qwen, optional cloud provider)
+AI explanation engine (local Ollama + Qwen, OpenRouter or hosted LLM)
         │
         ▼
 Dashboard · history · comparison · PDF export
@@ -88,6 +88,7 @@ flowchart LR
     ANA --> EXP[Explanation service]
     EXP --> LLM{AI provider}
     LLM --> OLL[Ollama + Qwen]
+    LLM --> OR[OpenRouter]
     LLM --> CLOUD[Cloud LLM API]
     CHAT[RAG chatbot - planned] --> VEC[(ChromaDB)]
 ```
@@ -103,7 +104,7 @@ Six layers: **frontend → API → processing → analysis → AI → storage**.
 | Database | SQLite (development) → PostgreSQL (production) |
 | PDF extraction | PyMuPDF, pdfplumber |
 | OCR | Tesseract (`pytesseract`) |
-| AI inference | Ollama + Qwen (local), optional hosted LLM |
+| AI inference | Ollama + Qwen (local), OpenRouter or other hosted LLM |
 | Embeddings / RAG | Sentence Transformers, ChromaDB, LangChain (Phase 3) |
 | Auth | JWT + bcrypt |
 | Deployment | Docker / Docker Compose |
@@ -162,6 +163,19 @@ ollama pull qwen2.5:3b
 ```
 
 Set `AI_PROVIDER=ollama` and `OLLAMA_MODEL=qwen2.5:3b` in `backend/.env`. If the model is unavailable, the API degrades gracefully to the template explanations.
+
+To use a hosted model through **OpenRouter** instead:
+
+```dotenv
+AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=sk-or-v1-...
+OPENROUTER_MODEL=openrouter/auto
+```
+
+Create a key at <https://openrouter.ai/keys>, then restart the backend. Any
+OpenRouter model slug can be used via `OPENROUTER_MODEL`. The key is read
+server-side only and is never exposed to the frontend; failed requests fall back
+to template explanations.
 
 ### 3. Frontend
 
