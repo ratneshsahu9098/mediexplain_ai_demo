@@ -184,6 +184,22 @@ backend\.venv\Scripts\python.exe scripts\generate_sample_reports.py
 This creates `samples/sample_cbc_report.pdf` and `samples/sample_lipid_report.pdf`.
 All values are fabricated — see [`samples/README.md`](samples/README.md).
 
+### 5. Demo account (optional)
+
+Seed a ready-to-use login with both sample reports already uploaded and analyzed:
+
+```powershell
+backend\.venv\Scripts\python.exe scripts\seed_demo.py
+```
+
+| Email | Password |
+|-------|----------|
+| `demo@mediexplain.app` | `DemoPass123` |
+
+The script is safe to re-run: it resets the demo password and skips reports that
+are already attached. These are **development-only** credentials — change or
+remove them before any public deployment.
+
 ## API overview
 
 | Method | Endpoint | Purpose |

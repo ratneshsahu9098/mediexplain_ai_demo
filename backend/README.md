@@ -125,6 +125,18 @@ curl.exe -s -X POST "http://localhost:8000/api/reports/$($upload.id)/explain?lan
 A `.env` with `AI_PROVIDER=ollama` but no running Ollama returns template
 explanations (`provider: "template"`) instead of failing.
 
+### Demo data
+
+From the repository root:
+
+```powershell
+backend\.venv\Scripts\python.exe scripts\seed_demo.py
+```
+
+This creates `demo@mediexplain.app` / `DemoPass123` with both synthetic sample
+reports attached. Re-running the script resets the demo password and skips
+duplicate uploads. Never use these credentials in a public deployment.
+
 ## Tests
 
 ```powershell
