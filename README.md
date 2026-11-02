@@ -49,7 +49,7 @@ AI explanation engine (local Ollama + Qwen, optional cloud provider)
 Dashboard · history · comparison · PDF export
         │
         ▼
-RAG chatbot grounded in the uploaded report + trusted medical sources
+Report-grounded chatbot (RAG + citations in Phase 3)
 ```
 
 ## Feature status
@@ -63,7 +63,7 @@ RAG chatbot grounded in the uploaded report + trusted medical sources
 | 5 | Structured data extraction | ✅ Implemented (rule-based v1) |
 | 6 | Analysis engine (range flags, units, critical flags) | ✅ Implemented |
 | 7 | AI explanation engine (Ollama/Qwen + offline fallback) | ✅ Implemented |
-| 8 | AI chatbot | ⏳ Planned (Phase 2) |
+| 8 | AI chatbot (report-grounded, safety refusals, offline fallback) | ✅ Implemented |
 | 9 | Medical knowledge base (RAG) | ⏳ Planned (Phase 3) |
 | 10 | Report history | ✅ Implemented |
 | 11 | Report comparison | ⏳ Planned |
@@ -216,9 +216,9 @@ For an India deployment, review the DPDP framework and applicable medical-device
 
 ## Roadmap
 
-**Phase 1 — MVP (current):** upload PDF → extract CBC values → reference ranges → HIGH/LOW flags → simple explanations.
+**Phase 1 — MVP (complete):** upload PDF → extract CBC values → reference ranges → HIGH/LOW flags → simple explanations.
 
-**Phase 2 — Intelligent app:** OCR for scans, Qwen explanations (EN/HI/Hinglish), report chat, history.
+**Phase 2 — Intelligent app (current):** OCR for scans, Qwen explanations (EN/HI/Hinglish), report chat, history.
 
 **Phase 3 — Advanced:** RAG knowledge base with citations, multi-report comparison, charts, PDF export, provider switching.
 

@@ -299,7 +299,7 @@ QUESTIONS = {
 }
 
 
-def _basic_info(canonical: Optional[str], test_name: str, language: str) -> str:
+def basic_info(canonical: Optional[str], test_name: str, language: str) -> str:
     entry = BASIC_INFO.get(canonical or "")
     if entry:
         if language == "hi":
@@ -337,7 +337,7 @@ def render_template(ctx: ResultContext, language: str) -> str:
     language = language if language in LABELS else "en"
     labels = LABELS[language]
 
-    info = _basic_info(ctx.canonical_name, ctx.test_name, language)
+    info = basic_info(ctx.canonical_name, ctx.test_name, language)
     value = _value_repr(ctx)
     status_label = labels.get(ctx.status, ctx.status)
     range_repr = _format_range(ctx, language)

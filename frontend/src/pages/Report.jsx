@@ -14,6 +14,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import Disclaimer from '../components/Disclaimer.jsx'
 import ExplanationText from '../components/ExplanationText.jsx'
+import ReportChat from '../components/ReportChat.jsx'
 import Spinner from '../components/Spinner.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import { api } from '../services/api.js'
@@ -333,6 +334,13 @@ export default function Report() {
           </>
         )}
       </section>
+
+      <ReportChat
+        reportId={report.id}
+        language={language}
+        onLanguageChange={setLanguage}
+        results={report.results}
+      />
 
       <section className="card p-5 sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

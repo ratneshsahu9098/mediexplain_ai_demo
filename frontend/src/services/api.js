@@ -82,6 +82,16 @@ export const api = {
       method: 'POST',
     }),
 
+  getChat: (reportId) => request(`/api/reports/${reportId}/chat`),
+
+  sendChat: (reportId, message, language) =>
+    request(`/api/reports/${reportId}/chat`, {
+      method: 'POST',
+      body: { message, language },
+    }),
+
+  clearChat: (reportId) => request(`/api/reports/${reportId}/chat`, { method: 'DELETE' }),
+
   deleteReport: (reportId) => request(`/api/reports/${reportId}`, { method: 'DELETE' }),
 }
 

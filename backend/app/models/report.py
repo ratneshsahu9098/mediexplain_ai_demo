@@ -37,6 +37,11 @@ class Report(Base):
         cascade="all, delete-orphan",
         order_by="TestResult.id",
     )
+    chat_messages: Mapped[list["ChatMessage"]] = relationship(  # noqa: F821
+        back_populates="report",
+        cascade="all, delete-orphan",
+        order_by="ChatMessage.id",
+    )
 
 
 class TestResult(Base):

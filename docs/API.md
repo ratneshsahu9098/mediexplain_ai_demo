@@ -132,6 +132,54 @@ Languages: `en`, `hi`, `hinglish`.
 }
 ```
 
+### `POST /api/reports/{id}/chat`
+
+Report-grounded conversation. The assistant may only discuss the results extracted
+from this report. Questions asking for a diagnosis, medicine or treatment are
+refused deterministically before any model is called. A stored conversation is
+returned by `GET` and can be cleared with `DELETE`.
+
+Request:
+
+```json
+{ "message": "Which results are out of range?", "language": "en" }
+```
+
+Languages: `en`, `hi`, `hinglish`.
+
+```json
+{
+  "report_id": 1,
+  "language": "en",
+  "provider": "template",
+  "reply": {
+    "id": 2,
+    "role": "assistant",
+    "content": "**Report summary** ...",
+    "language": "en",
+    "model": "template",
+    "source": "template",
+    "cited_result_ids": [1, 4],
+    "created_at": "2026-11-02T10:06:00Z"
+  },
+  "disclaimer": "AI-generated conversation about this report only..."
+}
+```
+
+- `provider` is `template` when the offline fallback answered, otherwise the
+  configured provider label (for example `ollama:qwen2.5:3b`).
+- `cited_result_ids` lists the extracted results used to ground the reply.
+
+### `GET /api/reports/{id}/chat`
+
+```json
+{ "report_id": 1, "messages": [ { "role": "user", "content": "..." }, { "role": "assistant", "content": "..." } ], "disclaimer": "..." }
+```
+
+### `DELETE /api/reports/{id}/chat`
+
+`204 No Content`. Clears the stored conversation for this report.
+
 ### `DELETE /api/reports/{id}`
 
 `204 No Content`. Deletes the database record and the stored file.

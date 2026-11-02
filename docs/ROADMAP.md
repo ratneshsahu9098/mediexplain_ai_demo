@@ -2,7 +2,7 @@
 
 ## Phases
 
-### Phase 1 — Basic working prototype (current)
+### Phase 1 — Basic working prototype (complete)
 
 - [x] FastAPI project, config, database models
 - [x] Register / login / JWT / bcrypt
@@ -12,17 +12,17 @@
 - [x] Structured extraction of test / value / unit / range
 - [x] Rule-based LOW / HIGH / NORMAL / UNKNOWN classification
 - [x] Deterministic + LLM explanation service
-- [x] Backend test suite (33 tests passing)
+- [x] Backend test suite (37 tests passing)
 - [x] React frontend (landing, auth, dashboard, upload, report)
 - [x] AI explanation UI with language selection
 
 **Goal achieved:** upload a CBC PDF → extracted values → ranges → flags → explanation,
 all through the web UI.
 
-### Phase 2 — Intelligent application
+### Phase 2 — Intelligent application (current)
 
-- [ ] Hindi / Hinglish explanation output
-- [ ] Report-grounded chatbot endpoint + UI
+- [x] Hindi / Hinglish explanation output
+- [x] Report-grounded chatbot endpoint + UI
 - [ ] Report history filters and reopen
 - [ ] Better scanned-report accuracy (deskew, crop, preprocessing)
 - [ ] Frontend charts and trends
@@ -74,7 +74,7 @@ all through the web UI.
 - [x] Ollama/Qwen provider + fallback
 - [x] Explanation generation
 - [ ] RAG knowledge base
-- [ ] Report chatbot
+- [x] Report chatbot (grounded, safety refusals, offline fallback)
 
 ### Advanced
 - [ ] History + comparison UI

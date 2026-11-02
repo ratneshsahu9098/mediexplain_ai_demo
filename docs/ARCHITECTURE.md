@@ -114,6 +114,18 @@ erDiagram
         string source
         datetime created_at
     }
+    CHAT_MESSAGES {
+        int id PK
+        int report_id FK
+        int user_id FK
+        string role
+        string content
+        string language
+        string model
+        string source
+        json cited_result_ids
+        datetime created_at
+    }
 ```
 
 Design decisions:
@@ -123,6 +135,9 @@ Design decisions:
 - Extraction confidence and validation status are stored per result.
 - `source_page` supports traceability to the original document.
 - LLM output is stored in `explanations`, never overwriting `test_results`.
+- Chat transcripts are stored per report; the assistant may only use that report's
+  extracted results, and diagnosis/prescription requests are refused before the
+  model is called.
 - Every report query is scoped by `user_id`.
 
 ## 5. Error handling
@@ -131,7 +146,7 @@ Design decisions:
 |---------|-----------|
 | Corrupt/unreadable PDF | Report `status=failed`, message stored, HTTP 422 |
 | Tesseract not installed | Text extraction still works; scanned uploads fail with a clear message |
-| Ollama offline | Template explanations, `source=template`, HTTP 200 |
+| Ollama offline | Template explanations/chat, `source=template`, HTTP 200 |
 | Duplicate file (same user) | HTTP 409 with existing report id |
 | Unauthorized report access | HTTP 404 (does not leak existence) |
 
