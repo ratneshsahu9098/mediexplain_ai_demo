@@ -146,6 +146,14 @@ def test_chat_hindi_and_request_validation(client):
     assert "सीमा से बाहर" in hindi_text
     assert "हीमोग्लोबिन" in hindi_text or "Hemoglobin" in hindi_text
 
+    hinglish = client.post(
+        f"/api/reports/{report_id}/chat",
+        headers=auth(token),
+        json={"message": "Which results are out of range?", "language": "hinglish"},
+    )
+    assert hinglish.status_code == 200, hinglish.text
+    assert "Range se bahar" in hinglish.json()["reply"]["content"]
+
     bad_language = client.post(
         f"/api/reports/{report_id}/chat",
         headers=auth(token),
